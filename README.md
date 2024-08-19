@@ -8,27 +8,6 @@
 **Acknowledgements**
 I would like to express my gratitude to my mentor Mr. Chakrahari Aravind Sai, for their invaluable guidance and support throughout this project. I also thank my colleagues for their collaboration and encouragement.
 
-**Table of Contents**
-Cover Page
-Acknowledgements
-Table of Contents
-Introduction
-Project Objectives
-Project Files and Usage
-Libraries and Framework
-Project Components
-.1 Entity Extraction
-.2 Report Summary
-.3 Chatbot Implementation
-Additional Features
-.1 OCR Integration
-.2 Text-to-Speech Functionality
-Challenges Faced
-Results 
-Conclusions
-Future Work
-References
-
 **Introduction**
 Access to well-organized clinical data is essential for effective healthcare delivery. This project aims to enhance the usability of clinical data through advanced AI techniques, focusing on entity extraction, report summarization, and a chatbot interface for user interaction. The system is designed to assist healthcare professionals in quickly accessing and understanding patient information, thereby improving decision-making and patient care.
 
