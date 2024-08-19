@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical App</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://kit.fontawesome.com/your-font-awesome-kit.js" crossorigin="anonymous"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #002147 0%, #0056b3 100%); /* Gradient from dark royal blue to lighter blue */
+            color: #ffffff; /* White text color */
+            font-family: Arial, sans-serif;
+        }
+        
+        .container {
+            margin-top: 50px;
+        }
+
+        .card {
+            background-color: #1a3f5d; /* Dark Slate Blue Card Color */
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .card h2 {
+            color: #ffd700; /* Gold color for card headings */
+        }
+
+        .btn-primary {
+            background-color: #0056b3; /* Darker Blue Button Color */
+            border-color: #0056b3;
+        }
+
+        .btn-primary:hover {
+            background-color: #004494; /* Even darker on hover */
+            border-color: #004494;
+        }
+
+        .loading-spinner {
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+
+        .spinner {
+            border-top-color: #002147; /* Darker Royal Blue Spinner */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center mt-5">Medical App</h1>
+        <div class="row mt-5">
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h2>Entity Extraction</h2>
+                        <form id="entity-extraction-form" method="POST" enctype="multipart/form-data" action="/extract_entities">
+                            <div class="form-group">
+                                <label for="pdf-file">Upload PDF:</label>
+                                <input type="file" class="form-control" id="pdf-file" name="pdf_file" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Extract Entities</button>
+                        </form>
+                        <div id="entity-extraction-result" class="mt-3"></div>
+                        <button id="speak-entity-btn" class="btn btn-primary mt-2"><i class="fas fa-volume-up"></i> Speak</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h2>Summary</h2>
+                        <form id="summary-form" method="POST" enctype="multipart/form-data" action="/summarize">
+                            <div class="form-group">
+                                <label for="pdf-file-summary">Upload PDF:</label>
+                                <input type="file" class="form-control" id="pdf-file-summary" name="pdf_file" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Summarize</button>
+                        </form>
+                        <div id="summary-result" class="mt-3"></div>
+                        <button id="speak-summary-btn" class="btn btn-primary mt-2"><i class="fas fa-volume-up"></i> Speak</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h2>QA Chat</h2>
+                        <form id="chatbot-form" method="POST" enctype="multipart/form-data" action="/chatbot">
+                            <div class="form-group">
+                                <label for="user-input">Ask a question:</label>
+                                <input type="text" class="form-control" id="user-input" name="user_input" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="pdf-file-chatbot">Upload PDF (optional):</label>
+                                <input type="file" class="form-control" id="pdf-file-chatbot" name="pdf_file">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Get Response</button>
+                        </form>
+                        <div id="chatbot-result" class="mt-3">
+                            <p id="chatbot-text"></p>
+                            <button id="speak-chatbot-btn" class="btn btn-primary mt-2"><i class="fas fa-volume-up"></i> Speak</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- End of row -->
+    </div> <!-- End of container -->
+
+    <!-- Loading Spinner -->
+    <div id="loading-spinner" class="loading-spinner" style="display:none;">
+        <div class="spinner"></div>
+        <p>Loading...</p>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            // Handle Entity Extraction Form Submission
+            $('#entity-extraction-form').on('submit', function(e) {
+                e.preventDefault();
+                var formData = new FormData(this);
+                
+                $.ajax({
+                    url: '/extract_entities',
+                    type: 'POST',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function(data) {
+                        $('#entity-extraction-result').text(data); // Display the response
+                    },
+                    error: function(xhr, status, error) {
+                        $('#entity-extraction-result').text('Error: ' + error);
+                    }
+                });
+            });
+
+            // Handle Summary Form Submission
+            $('#summary-form').on('submit', function(e) {
+                e.preventDefault();
+                var formData = new FormData(this);
+                
+                $.ajax({
+                    url: '/summarize',
+                    type: 'POST',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function(data) {
+                        $('#summary-result').text(data); // Display the response
+                    },
+                    error: function(xhr, status, error) {
+                        $('#summary-result').text('Error: ' + error);
+                    }
+                });
+            });
+
+            // Handle Chatbot Form Submission
+            $('#chatbot-form').on('submit', function(e) {
+                e.preventDefault();
+                var formData = new FormData(this);
+                showLoadingSpinner(); // Show loading spinner
+                
+                $.ajax({
+                    url: '/chatbot',
+                    type: 'POST',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function(data) {
+                        $('#chatbot-text').text(data.response); // Display the response
+                    },
+                    error: function(xhr, status, error) {
+                        $('#chatbot-text').text('Error: ' + error);
+                    },
+                    complete: function() {
+                        hideLoadingSpinner(); // Hide loading spinner when done
+                    }
+                });
+            });
+
+            // Handle Speak Button Click for Entity Extraction
+            $('#speak-entity-btn').on('click', function() {
+                var text = $('#entity-extraction-result').text();
+                speakText(text);
+            });
+
+            // Handle Speak Button Click for Summary
+            $('#speak-summary-btn').on('click', function() {
+                var text = $('#summary-result').text();
+                speakText(text);
+            });
+
+            // Handle Speak Button Click for Chatbot
+            $('#speak-chatbot-btn').on('click', function() {
+                var text = $('#chatbot-text').text();
+                speakText(text);
+            });
+        });
+
+        function showLoadingSpinner() {
+            $('#loading-spinner').css('display', 'flex');
+        }
+
+        function hideLoadingSpinner() {
+            $('#loading-spinner').css('display', 'none');
+        }
+
+        function speakText(text) {
+            if ('speechSynthesis' in window) {
+                var utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'en-US'; // Set the language
+                utterance.rate = 1.25; // Set the speech rate to 1.25x
+                window.speechSynthesis.speak(utterance);
+            } else {
+                alert("Sorry, your browser does not support text-to-speech.");
+            }
+        }
+    </script>
+</body>
+</html>

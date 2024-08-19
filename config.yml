@@ -1,0 +1,8 @@
+model:
+  tokenizer_name: "allenai/scibert_scivocab_uncased"  
+  model_name: "allenai/scibert_scivocab_uncased"      
+  distilbert_tokenizer_name: "distilbert-base-uncased"  
+  distilbert_model_name: "distilbert-base-uncased"      
+  summarizer_model_name: "MBZUAI/LaMini-Flan-T5-248M"    
+  summarizer_tokenizer_name: "MBZUAI/LaMini-Flan-T5-248M" 
+  chatbot_model_name: "llama2"                            
