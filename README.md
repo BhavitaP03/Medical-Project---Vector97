@@ -6,18 +6,25 @@
 **Date of Submission:** August 19, 2024
 
 **Acknowledgements**
+
 I would like to express my gratitude to my mentor Mr. Chakrahari Aravind Sai, for their invaluable guidance and support throughout this project. I also thank my colleagues for their collaboration and encouragement.
 
+
 **Introduction**
+
 Access to well-organized clinical data is essential for effective healthcare delivery. This project aims to enhance the usability of clinical data through advanced AI techniques, focusing on entity extraction, report summarization, and a chatbot interface for user interaction. The system is designed to assist healthcare professionals in quickly accessing and understanding patient information, thereby improving decision-making and patient care.
 
+
 **Project Objectives**
+
 The main objectives of this project include:
 Entity Extraction: To identify and extract key medical entities from clinical documents, such as patient names, ages, diseases, treatments, and symptoms.
 Report Summarization: To summarize lengthy clinical reports into concise and relevant insights for quick understanding.
 Chatbot Development: To create a chatbot that can answer questions based on clinical documents and general medical inquiries, enhancing user accessibility and information retrieval.
 
+
 **Project Files and Usage**
+
 venv: This virtual environment is used to manage dependencies, ensuring that the project runs with specific library versions without affecting the global Python environment.
 config.yml: This configuration file specifies the models and tokenizers used in the project.
 utils.py: This module contains utility functions and classes that support the main functionalities of the application, including:
@@ -39,7 +46,9 @@ Input box: The interface features an input box for users to ask questions about 
 Audio Playback Controls: Controls for playing audio generated from text-to-speech, enabling users to listen to extracted entities, chatbot replies and summaries.
 Styling and Responsiveness: The interface is styled with CSS for a clean appearance.
 
+
 **Libraries and Frameworks**
+
 Flask: A lightweight web framework used to create the web application, manage routes, and handle user interactions.
 PyPDF2: A library for reading and extracting text from PDF files, enabling the application to process clinical documents uploaded by users.
 gTTS (Google Text-to-Speech): A library that converts text into spoken audio, allowing the application to provide audio feedback for extracted entities and summaries.
@@ -58,7 +67,9 @@ Subprocess: A built-in Python module used to run external commands, enabling the
 YAML: A data serialization format used to read configuration settings from the config.yml file, allowing for easy management of model parameters and settings.
 Tesseract (OCR Library): An OCR library that can be integrated to convert images of text into machine-readable text, enabling the application to process scanned documents effectively.
 
+
 **Project Components**
+
 .1Entity Extraction
 The entity extraction component is designed to identify and extract significant medical entities from clinical text. This involves using a Named Entity Recognition (NER) system that leverages pre-trained models to recognize specific terms related to patient information.
 Model used: 
@@ -74,7 +85,7 @@ process_entities(text, entities): Uses regular expressions to extract specific d
 2 Report Summary
 The report summarization component aims to condense lengthy clinical reports into concise summaries that highlight key patient information.
  Model Used:
-          The summarization component employs the MBZUAI/LaMini-Flan-T5-248M model, which is designed for text generation tasks, particularly effective in summarizing clinical reports.
+ The summarization component employs the MBZUAI/LaMini-Flan-T5-248M model, which is designed for text generation tasks, particularly effective in summarizing clinical reports.
 Integration Points:
 The Summarizer class is initialized with the same configuration file as the EntityExtractor, allowing it to utilize the entity extraction capabilities during the summarization process.
 The method file_preprocessing uses the Langchain library to load and split PDF documents into manageable chunks for summarization.
@@ -96,7 +107,9 @@ get_response(model_name, user_input): Uses the LLaMA2 model to handle general in
 is_medical_question(question): A helper function that determines if a question is related to medical content by checking for specific keywords.
 The chatbot enhances user engagement by providing immediate responses to inquiries, thereby facilitating better communication and understanding of clinical data.
 
+
 **Additional Features**
+
 .1 OCR Integration
 To accommodate scanned documents that may not be in a text format, the system integrates Optical Character Recognition (OCR) capabilities using the Tesseract library.
 Model Used:
@@ -115,11 +128,15 @@ generate_audio(text, language): Uses the gTTS library to convert text into an au
 play_audio(file_path): Plays the generated audio file using the appropriate system command based on the operating system.
 This functionality is particularly useful for users who prefer auditory information or for accessibility purposes.
 
+
 **Challenges Faced**
+
 Data Quality Issues: Ensuring that the input PDFs were of high quality for text extraction was a challenge. Some documents had poor formatting or were scanned at low resolutions, which affected the OCR performance.
 Integration Complexity: Coordinating multiple components (NER, summarization, chatbot) into a cohesive application required careful planning and testing to ensure that all parts worked together smoothly.
 
+
 **Results**
+
 Entity Extraction:
 The EntityExtractor class successfully identifies and extracts key medical entities from clinical documents. The entities extracted include patient names, ages, diseases, treatments, and symptoms. 
 The method extract_entities uses a combination of regular expressions and a pre-trained model to identify entities. 
@@ -128,10 +145,14 @@ The Summarizer class generates concise summaries of clinical reports by utilizin
 Chatbot Performance:
 The chatbot functionality, implemented through the Flask application, allows users to ask questions related to clinical data. The chatbot uses the answer_pdf_question function to provide answers based on the content of uploaded PDF documents and the get_response function for general inquiries.
 
+
 **Conclusions**
+
 The project successfully demonstrated the potential of AI in enhancing the usability of clinical data. The integrated system allows for efficient entity extraction, summarization, and user interaction through a chatbot. And it also allowed the user the freedom to use any type of document format. This tool can significantly assist healthcare professionals in managing and understanding patient information, ultimately improving patient care.
 
+
 **Future Work**
+
 Expand NER capabilities to include additional medical entities and relationships, such as family medical history, allergies, and lab results, enhancing the understanding of patient data.
 Improve the chatbot's conversational abilities by implementing advanced natural language processing techniques, enabling it to manage complex queries and provide contextually relevant responses.
 Add multilingual support to cater to a broader audience, improving accessibility for non-English speaking users and enhancing user engagement.
@@ -139,10 +160,14 @@ Integrate lip-sync capabilities for the text-to-speech feature to create a more 
 Optimize response time by enhancing backend processing, reducing latency in data retrieval and response generation for quicker user feedback.
 Fine-tune models for problem-oriented results by adjusting them based on specific use cases, ensuring outputs align better with user needs and clinical scenarios.
 
+
 **References**
 https://huggingface.co/
+
 https://ollama.com/
+
 https://github.com/dsdanielpark/gpt2-bert-medical-qa-chat/
+
 
 
 
