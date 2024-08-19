@@ -18,32 +18,54 @@ Access to well-organized clinical data is essential for effective healthcare del
 **Project Objectives**
 
 The main objectives of this project include:
+
 Entity Extraction: To identify and extract key medical entities from clinical documents, such as patient names, ages, diseases, treatments, and symptoms.
+
 Report Summarization: To summarize lengthy clinical reports into concise and relevant insights for quick understanding.
+
 Chatbot Development: To create a chatbot that can answer questions based on clinical documents and general medical inquiries, enhancing user accessibility and information retrieval.
 
 
 **Project Files and Usage**
 
 venv: This virtual environment is used to manage dependencies, ensuring that the project runs with specific library versions without affecting the global Python environment.
+
 config.yml: This configuration file specifies the models and tokenizers used in the project.
+
 utils.py: This module contains utility functions and classes that support the main functionalities of the application, including:
+
 EntityExtractor: Extracts medical entities from clinical text, with methods for reading PDF files, preprocessing text, and extracting patient details.
+
 Summarizer: Generates summaries of clinical reports using the T5 model, including methods for preprocessing input files and creating focused prompts for summarization.
+
 answer_pdf_question: Provides answers to user queries based on the content of uploaded PDF documents using a question-answering model.
+
 get_response: Handles general inquiries using the LLaMA2 model.
+
 generate_audio: Converts text to speech using the gTTS library and saves the output as an MP3 file.
+
 play_audio: Plays the generated audio file using system commands.
+
 extract_text_from_image: (OCR functionality) Uses an OCR library Tesseract to convert images of text into machine-readable text, allowing the application to process scanned documents.
+
 app.py: The main application file that sets up the Flask web server and handles user interactions, including:
+
 Routes: Defines endpoints for entity extraction, summarization, and chatbot, ocr interactions.
+
 File Handling: Manages the uploading of PDF files and processes them using methods defined in utils.py.
+
 index.html: 
+
 The index.html file serves as the front-end interface for the application, providing a user-friendly layout for interacting with the AI-based clinical data management system.
+
 Document Upload Section: A file input box for users to upload clinical documents in PDF format, with clear instructions on accepted file types.
+
 Loader Animation: A visual loader that appears during document uploads or query submissions, indicating that the application is processing the request.
+
 Input box: The interface features an input box for users to ask questions about clinical data, with chatbot responses displayed dynamically. It also shows extracted information from uploaded documents, including patient details and a summary of the clinical report, all on the same page of the web interface.
+
 Audio Playback Controls: Controls for playing audio generated from text-to-speech, enabling users to listen to extracted entities, chatbot replies and summaries.
+
 Styling and Responsiveness: The interface is styled with CSS for a clean appearance.
 
 
